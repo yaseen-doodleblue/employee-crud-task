@@ -1,3 +1,4 @@
+````markdown
 # Employee CRUD API
 
 A RESTful API for managing employees, built with **NestJS**, **TypeORM**, **PostgreSQL**, and **Docker**.
@@ -23,70 +24,97 @@ Follow these steps to get the project running on your local machine.
 ```bash
 git clone https://github.com/yaseen-doodleblue/employee-crud-task.git
 cd employee-crud-task
-2. Install Dependencies
-bash
-Copy code
+````
+
+---
+
+### 2. Install Dependencies
+
+```bash
 pnpm install
-3. Configure Environment Variables
+```
+
+---
+
+### 3. Configure Environment Variables
+
 The project requires an environment file to connect to the database.
 
-Create a new file named .env in the root directory.
+1. Create a new file named `.env` in the root directory.
+2. Copy the contents from `.env.example` into `.env`.
+3. *(Optional)* You can keep the default values if you are using the provided Docker setup.
 
-Copy the contents from .env.example into .env.
+---
 
-(Optional) You can keep the default values if you are using the provided Docker setup.
+### 4. Start the Database (Docker)
 
-4. Start the Database (Docker)
 This command will pull PostgreSQL and start it in a Docker container.
 
-bash
-Copy code
+```bash
 docker-compose up -d
+```
+
 To verify that the database is running:
 
-bash
-Copy code
+```bash
 docker ps
-5. Start the Application
+```
+
+---
+
+### 5. Start the Application
+
 Run the NestJS server in development mode:
 
-bash
-Copy code
+```bash
 pnpm start:dev
+```
+
 The server will be available at:
 
-arduino
-Copy code
+```
 http://localhost:3000
-📡 API Endpoints
-You can test these endpoints using Postman or Thunder Client.
+```
 
-Employees API
-Method	Endpoint	Description	Body (JSON)
-POST	/employees	Create a new employee	{ "firstName": "John", "lastName": "Doe", "email": "john@test.com", "department": "IT", "salary": 50000 }
-GET	/employees	Get all employees	N/A
-GET	/employees/:id	Get employee by ID	N/A
-PUT	/employees/:id	Update employee (partial update allowed)	{ "salary": 60000 }
-DELETE	/employees/:id	Delete employee	N/A
+---
 
-🛑 How to Stop the Application
-Stop the NestJS server:
+## 📡 API Endpoints
 
-mathematica
-Copy code
-Ctrl + C
-Stop and remove Docker containers:
+You can test these endpoints using **Postman** or **Thunder Client**.
 
-bash
-Copy code
-docker-compose down
-👨‍💻 Tech Stack
-Framework: NestJS
+### Employees API
 
-Language: TypeScript
+| Method     | Endpoint         | Description                              | Body (JSON)                                                                                                 |
+| ---------- | ---------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **POST**   | `/employees`     | Create a new employee                    | `{ "firstName": "John", "lastName": "Doe", "email": "john@test.com", "department": "IT", "salary": 50000 }` |
+| **GET**    | `/employees`     | Get all employees                        | N/A                                                                                                         |
+| **GET**    | `/employees/:id` | Get employee by ID                       | N/A                                                                                                         |
+| **PUT**    | `/employees/:id` | Update employee (partial update allowed) | `{ "salary": 60000 }`                                                                                       |
+| **DELETE** | `/employees/:id` | Delete employee                          | N/A                                                                                                         |
 
-Database: PostgreSQL
+---
 
-ORM: TypeORM
+## 🛑 How to Stop the Application
 
-Containerization: Docker
+1. Stop the NestJS server:
+
+   ```
+   Ctrl + C
+   ```
+2. Stop and remove Docker containers:
+
+   ```bash
+   docker-compose down
+   ```
+
+---
+
+## 👨‍💻 Tech Stack
+
+* **Framework:** NestJS
+* **Language:** TypeScript
+* **Database:** PostgreSQL
+* **ORM:** TypeORM
+* **Containerization:** Docker
+
+---
