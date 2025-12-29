@@ -1,98 +1,101 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Employee CRUD API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A RESTful API for managing employees, built with **NestJS**, **TypeORM**, **PostgreSQL**, and **Docker**.
 
-## Description
+## 🚀 Prerequisites
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Before running this project, ensure you have the following installed:
+* **Node.js** (v16 or higher)
+* **pnpm** (preferred package manager)
+* **Docker** & **Docker Compose**
 
-## Project setup
+## 🛠️ Installation & Setup
 
+Follow these steps to get the project running on your local machine.
+
+### 1. Clone the Repository
 ```bash
-$ pnpm install
+git clone [https://github.com/yaseen-doodleblue/employee-crud-task.git](https://github.com/yaseen-doodleblue/employee-crud-task.git)
+cd employee-crud-task
+
 ```
 
-## Compile and run the project
+### 2. Install Dependencies
 
 ```bash
-# development
-$ pnpm run start
+pnpm install
 
-# watch mode
-$ pnpm run start:dev
-
-# production mode
-$ pnpm run start:prod
 ```
 
-## Run tests
+### 3. Configure Environment Variables
+
+The project needs an environment file to connect to the database.
+
+1. Create a new file named `.env` in the root folder.
+2. Copy the contents from `.env.example` into `.env`.
+3. (Optional) You can leave the default values if you are using the provided Docker setup.
+
+### 4. Start the Database (Docker)
+
+This command will download PostgreSQL and start it in a container.
 
 ```bash
-# unit tests
-$ pnpm run test
+docker-compose up -d
 
-# e2e tests
-$ pnpm run test:e2e
-
-# test coverage
-$ pnpm run test:cov
 ```
 
-## Deployment
+> *Check if the database is running:* `docker ps`
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### 5. Start the Application
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Run the NestJS server in development mode.
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+pnpm start:dev
+
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The server will start on: `http://localhost:3000`
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📡 API Endpoints
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+You can test these endpoints using **Postman** or **Thunder Client**.
 
-## Support
+### Employees
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Method | Endpoint | Description | Body (JSON) |
+| --- | --- | --- | --- |
+| **POST** | `/employees` | Create a new employee | `{ "firstName": "John", "lastName": "Doe", "email": "john@test.com", "department": "IT", "salary": 50000 }` |
+| **GET** | `/employees` | Get all employees | N/A |
+| **GET** | `/employees/:id` | Get employee by ID | N/A |
+| **PUT** | `/employees/:id` | Update employee | `{ "salary": 60000 }` (Partial updates allowed) |
+| **DELETE** | `/employees/:id` | Delete employee | N/A |
 
-## Stay in touch
+---
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🛑 How to Stop
 
-## License
+To stop the application and database:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+1. Stop the server: Press `Ctrl + C` in the terminal.
+2. Stop Docker:
+
+```bash
+docker-compose down
+
+```
+
+## 👨‍💻 Tech Stack
+
+* **Framework:** NestJS
+* **Language:** TypeScript
+* **Database:** PostgreSQL
+* **ORM:** TypeORM
+* **Containerization:** Docker
+
+```
+
+```
