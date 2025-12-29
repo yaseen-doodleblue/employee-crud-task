@@ -104,17 +104,19 @@ You can test these endpoints using **Postman** or **Thunder Client**.
 2. Stop and remove Docker containers:
 
    ```bash
-   docker-compose down
    ```
+
+docker-compose down
+
+```
 
 ---
 
 ## 👨‍💻 Tech Stack
 
-* **Framework:** NestJS
-* **Language:** TypeScript
-* **Database:** PostgreSQL
-* **ORM:** TypeORM
-* **Containerization:** Docker
-
----
+- **Framework:** NestJS
+- **Language:** TypeScript
+- **Database:** PostgreSQL
+- **ORM:** TypeORM
+- **Containerization:** Docker
+```
