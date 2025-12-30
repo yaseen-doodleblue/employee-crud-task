@@ -18,21 +18,33 @@ export class EmployeesService {
   }
 
   findAll() {
-    return this.employeeRepo.find();
+    return this.employeeRepo.find({
+      relations: ['address', 'bankDetails'], 
+    });
   }
 
   async findOne(id: number) {
-    const emp = await this.employeeRepo.findOneBy({ id });
-    if (!emp) throw new NotFoundException(`Employee ${id} not found`);
-    return emp;
+    const employee = await this.employeeRepo.findOne({
+      where: { id },
+      relations: ['address', 'bankDetails'],
+    });
+    
+    // Safety Check: Throw error if ID doesn't exist
+    if (!employee) {
+      throw new NotFoundException(`Employee #${id} not found`);
+    }
+    
+    return employee;
   }
 
   async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    const emp = await this.findOne(id);
+    // This will now throw an error automatically if not found
+    const emp = await this.findOne(id); 
+    
     this.employeeRepo.merge(emp, updateEmployeeDto);
     return this.employeeRepo.save(emp);
   }
-
+  
   async remove(id: number) {
     const result = await this.employeeRepo.delete(id);
     if (result.affected === 0) throw new NotFoundException(`Employee ${id} not found`);

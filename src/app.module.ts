@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EmployeesModule } from './employees/employees.module';
-import { Employee } from './employees/entities/employee.entity';
+// You don't need to import specific entities here anymore!
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }), 
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -14,8 +14,9 @@ import { Employee } from './employees/entities/employee.entity';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [Employee],
-      synchronize: true, 
+      
+      autoLoadEntities: true, // 
+      synchronize: true,
     }),
     EmployeesModule,
   ],
