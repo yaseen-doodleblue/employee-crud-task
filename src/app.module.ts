@@ -1,49 +1,42 @@
-import { Module, MiddlewareConsumer, RequestMethod, NestModule } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { APP_GUARD } from '@nestjs/core'; 
-import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'; 
-import { EmployeesModule } from './employees/employees.module';
-import { AuthMiddleware } from './middleware/auth.middleware'; 
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DatabaseModule } from './database/database.module';
+import { AuthModule } from './auth/auth.module';
+import { MailerModule } from '@nestjs-modules/mailer'; 
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    DatabaseModule,
+    AuthModule,
     
-    // Rate Limiter Configuration
-    ThrottlerModule.forRoot([{
-      ttl: 60000, // 60 seconds
-      limit: 10, // 10 requests
-    }]),
-
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT || '5432'),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
-      autoLoadEntities: true,
-      synchronize: true, 
+    // 👇 Configure Email Module
+    MailerModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (config: ConfigService) => ({
+        transport: {
+          host: 'smtp.gmail.com', // or your SMTP host
+          secure: false,
+          auth: {
+            user: config.get('MAIL_USER'), 
+            pass: config.get('MAIL_PASS'),  
+        },
+        },
+        defaults: {
+          from: '"Test Company" <yaseen.doodleblue@gmail.com>',
+        },
+        template: {
+          dir: join(process.cwd(), 'dist/templates'),
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
+      }),
+      inject: [ConfigService],
     }),
-    EmployeesModule,
-  ],
-  providers: [
-    // Activate Rate Limiter Globally
-    {
-      provide: APP_GUARD,
-      useClass: ThrottlerGuard,
-    },
   ],
 })
-export class AppModule implements NestModule {
-  // Configure Auth Middleware
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes(
-        { path: 'employees', method: RequestMethod.ALL },
-        { path: 'employees/*', method: RequestMethod.ALL }
-      );
-  }
-}
+export class AppModule {}
